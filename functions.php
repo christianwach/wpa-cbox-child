@@ -228,19 +228,27 @@ add_filter( 'gettext', 'wpa_cbox_no_subgroups_text', 40, 3 );
 
 
 
-function wpa_cbox_upcoming_events_page( $query ){
+function wpa_cbox_upcoming_events_page( $query ) {
+	
+	// only run when EO active on main site
+	if ( function_exists( 'eventorganiser_is_event_query' ) ) {
+		
+		if( eventorganiser_is_event_query( $query ) ) {
+		
+			if( $query->get( 'wpa_cbox' ) && 'upcoming-events' == $query->get( 'wpa_cbox' ) ){
 
-    if( eventorganiser_is_event_query( $query ) ){
-        if( $query->get( 'wpa_cbox' ) && 'upcoming-events' == $query->get( 'wpa_cbox' ) ){
+				// show only upcoming events
+				$query->set( 'event_start_after', 'now' );
+				
+				// this is needed for now, but maybe redundant in the future...
+				$query->set( 'showpastevents', true );
+			
+				//die('here');
 
-            //Show only upcoming events.
-            $query->set( 'event_start_after', 'now' );
-            //This is needed for now, but maybe redundant in the future...
-            $query->set( 'showpastevents', true );
-            
-            //die('here');
-
-        }
+			}
+			
+		}
+		
     }
 }
 add_action( 'pre_get_posts', 'wpa_cbox_upcoming_events_page', 5 );
@@ -248,27 +256,39 @@ add_action( 'pre_get_posts', 'wpa_cbox_upcoming_events_page', 5 );
 
 
 function wpa_cbox_register_query_vars( $qvars ){
-    $qvars[] = 'wpa_cbox';
+	
+	// only run when EO active on main site
+	if ( function_exists( 'eventorganiser_is_event_query' ) ) {
+	    $qvars[] = 'wpa_cbox';
+    }
+    
+    // --<
     return $qvars;
+    
 }
 add_filter('query_vars', 'wpa_cbox_register_query_vars' );
 
 
 
-function wpa_cbox_add_rewrite_rule(){
+function wpa_cbox_add_rewrite_rule() {
+
+	// only run when EO active on main site
+	if ( !function_exists( 'eventorganiser_is_event_query' ) ) return;
+
     global $wp_rewrite;
 
-    //Get base regex
+    // get base regex
     $regex = str_replace( '%event%', 'upcoming-events', $wp_rewrite->get_extra_permastruct('event') );
 
-    //Get pagination base regex
+    // get pagination base regex
     $pageregex = $wp_rewrite->pagination_base . '/?([0-9]{1,})/?$';
 
-     //Add paged rewrite rule
+     // add paged rewrite rule
     add_rewrite_rule( $regex.'/'.$pageregex, 'index.php?post_type=event&paged=$matches[1]&event_start_after=now&wpa_cbox=upcoming-events', 'top' );
 
-     //Add standard rewrite url
+     // add standard rewrite url
     add_rewrite_rule( $regex, 'index.php?post_type=event&event_start_after=now&wpa_cbox=upcoming-events', 'top' );
+
 }
 
 add_action( 'init', 'wpa_cbox_add_rewrite_rule', 11 );
