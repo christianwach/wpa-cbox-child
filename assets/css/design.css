@@ -514,10 +514,19 @@ thead:first-child tr th a,thead:first-child tr td a {
 	display: none;
 }
 
-/* > Plugin fixes and compatibility
+
+
+/*
+--------------------------------------------------------------------------------
+Plugin fixes and compatibility
+--------------------------------------------------------------------------------
+*/
+
+
+
+/* > WP Facebook Auto Connect
 --------------------------------------------------------------*/
 
-/* WP Facebook Auto Connect */
 body#infinity-base.registration .icext-feature.icext-bp-fb-autoconnect
 {
 	background-color: transparent;
@@ -738,7 +747,9 @@ body#infinity-base.registration .icext-feature.icext-bp-fb-autoconnect
 
 
 
-/* CBOX theme fixes */
+/* > CBOX theme fixes
+--------------------------------------------------------------*/
+
 .post-content
 {
 	clear: left;
@@ -804,7 +815,9 @@ ul#blogs-list.item-list li:last-child
 
 
 
-/* fix for calendar display */
+/* > Fixes for calendar display
+--------------------------------------------------------------*/
+
 div.eo-fullcalendar, 
 div.eo-fullcalendar *
 {
@@ -913,7 +926,9 @@ body.post-type-archive-event #content
 
 
 
-/* Single Event Page */
+/* > Single Event Page
+--------------------------------------------------------------*/
+
 body.single-event #content .event
 {
 	padding: 20px 20px 0 20px;
@@ -971,7 +986,9 @@ body.single-event #content #respond
 
 
 
-/* Venue Archive Page */
+/* > Venue Archive Page
+--------------------------------------------------------------*/
+
 body.tax-event-venue #content
 {
 	padding: 40px 40px 0 40px;
@@ -1008,7 +1025,9 @@ body.tax-event-venue #content .eo-event-meta
 
 
 
-/* Category Archive Page */
+/* > Category Archive Page
+--------------------------------------------------------------*/
+
 body.tax-event-category #content
 {
 	padding: 40px 40px 0 40px;
@@ -1045,10 +1064,88 @@ body.tax-event-category #content .event .eo-event-meta
 
 
 
+/* > Sidebar Calendar
+--------------------------------------------------------------*/
+
+table#wp-calendar
+{
+	color: #333;
+	background-color: #fff;
+}
+
+table#wp-calendar > caption
+{
+	padding-top: 5px;
+	padding-bottom: 5px;
+	color: #82194e;
+	background-color: #eee;
+	font-weight: bold;
+	text-shadow: 0 1px 0 #fff;
+}
+
+table#wp-calendar td
+{
+	background: #fff;
+	background: -moz-linear-gradient(top, #f8f8f8 0%, #e4e4e4 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f8f8f8), color-stop(100%,#e4e4e4));
+	background: -webkit-linear-gradient(top, #f8f8f8 0%,#e4e4e4 100%);
+	background: -o-linear-gradient(top, #f8f8f8 0%,#e4e4e4 100%);
+	background: -ms-linear-gradient(top, #f8f8f8 0%,#e4e4e4 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f8f8f8', endColorstr='#e4e4e4',GradientType=0 );
+	background: linear-gradient(top, #f8f8f8 0%,#e4e4e4 100%);
+	padding: 6px 4px;
+	border: 1px solid #d0d0d0;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 0 1px 0 #fff;
+}
+
+table#wp-calendar thead tr,
+table#wp-calendar tfoot tr
+{
+	background: #fff;
+	border-bottom: 1px solid #d0d0d0;
+}
+
+table#wp-calendar thead tr td,
+table#wp-calendar tfoot tr td
+{
+	background: #fff;
+	border: none;
+}
+
+table#wp-calendar thead td,
+table#wp-calendar tfoot td
+{
+	background-color: #fff;
+	padding: 6px 4px;
+	border: none;
+}
+
+table#wp-calendar tr.days-names td
+{
+	background: #e8e8e8;
+	padding: 6px 4px;
+	border: none;
+	font-weight: normal;
+}
+
+table#wp-calendar td a,
+table#wp-calendar td a:hover
+{
+	color: #82194e;
+	text-shadow: 0 1px 0 #fff;
+}
 
 
 
-/* Sliding Login Panel */
+
+/*
+--------------------------------------------------------------------------------
+Sliding Login Panel
+--------------------------------------------------------------------------------
+*/
+
 .bp-sliding-login-tab ul.bp-sliding-login-login
 {
 	
