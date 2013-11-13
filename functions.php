@@ -1,6 +1,6 @@
 <?php /*
 ================================================================================
-Custom functionality for Thoreau CBOX Child Theme.
+Custom functionality for WPA CBOX Child Theme.
 ================================================================================
 AUTHOR: Christian Wach <needle@haystack.co.uk>
 --------------------------------------------------------------------------------
@@ -14,6 +14,44 @@ NOTES
 
 // bootstrap Infinity engine
 require_once( 'engine/includes/custom.php' );
+
+
+
+function wpa_cbox_setup() {
+	
+	/*
+	register_taxonomy( 'staff', 'user', array(
+		'public' => true,
+		'labels' => array(
+			'name'                        =>'Staff Roles',
+			'singular_name'               =>'Staff Role',
+			'menu_name'                   =>'Staff Roles',
+			'search_items'                =>'Search Staff Roles',
+			'popular_items'               =>'Popular Staff Roles',
+			'all_items'                   =>'All Staff Roles',
+			'edit_item'                   =>'Edit Staff Role',
+			'update_item'                 =>'Update Staff Role',
+			'add_new_item'                =>'Add New Staff Role',
+			'new_item_name'               =>'New Staff Role Name',
+			'separate_items_with_commas'  =>'Separate Staff Roles with commas',
+			'add_or_remove_items'         =>'Add or remove Staff Roles',
+			'choose_from_most_used'       =>'Choose from the most popular Staff Roles',
+		),
+		'rewrite' => array(
+			'with_front'                  =>true,
+			'slug'                        =>'staff',
+		),
+		'capabilities' => array(
+			'manage_terms'                =>'edit_users',
+			'edit_terms'                  =>'edit_users',
+			'delete_terms'                =>'edit_users',
+			'assign_terms'                =>'read',
+		),
+	));
+	*/
+
+}
+add_action( 'after_setup_theme', 'wpa_cbox_setup' );
 
 
 
@@ -228,6 +266,9 @@ add_filter( 'gettext', 'wpa_cbox_no_subgroups_text', 40, 3 );
 
 
 
+/**
+ * Amend query for upcoming events
+ */
 function wpa_cbox_upcoming_events_page( $query ) {
 	
 	// only run when EO active on main site
@@ -255,6 +296,9 @@ add_action( 'pre_get_posts', 'wpa_cbox_upcoming_events_page', 5 );
 
 
 
+/**
+ * Amend query vars for upcoming events (see above)
+ */
 function wpa_cbox_register_query_vars( $qvars ){
 	
 	// only run when EO active on main site
@@ -270,6 +314,9 @@ add_filter('query_vars', 'wpa_cbox_register_query_vars' );
 
 
 
+/**
+ * Amend rewrite rules for upcoming events (see above)
+ */
 function wpa_cbox_add_rewrite_rule() {
 
 	// only run when EO active on main site
@@ -298,7 +345,7 @@ add_action( 'init', 'wpa_cbox_add_rewrite_rule', 11 );
 /**
  * Add our login box to the sliding header
  */
-function wpa_cbox_add_login_form(){
+function wpa_cbox_add_login_form() {
 	
 	?>
 	
@@ -360,7 +407,7 @@ add_action( 'bp_sliding_login_panel_anon_after_register', 'wpa_cbox_add_login_fo
 /**
  * Add our logo to the sliding header
  */
-function wpa_cbox_add_logo_to_panel(){
+function wpa_cbox_add_logo_to_panel() {
 	
 	return get_stylesheet_directory_uri().'/assets/images/wpa-logo-panel.png';
 	
@@ -373,7 +420,7 @@ add_action( 'bp_sliding_login_logo', 'wpa_cbox_add_logo_to_panel' );
 /**
  * Add our CiviCRM data to the event
  */
-function wpa_cbox_get_event_meta_list(){
+function wpa_cbox_get_event_meta_list() {
 	
 	$post_id = (int) ( empty($post_id) ? get_the_ID() : $post_id);
 
@@ -383,6 +430,18 @@ function wpa_cbox_get_event_meta_list(){
 	echo '<p>Event CiviCRM data</p>';
 	
 }
+
+
+
+/**
+ * Override Theme My Login and restore BuddyPress registration page
+ */
+function wpa_cbox_restore_bp_register_page( $url, $action, $instance ) {
+	if ( $action == 'register' ) {
+		return bp_get_root_domain().'/'.bp_get_signup_slug();
+	}
+}
+add_filter( 'tml_action_url', 'wpa_cbox_restore_bp_register_page', 10, 3 );
 
 
 
